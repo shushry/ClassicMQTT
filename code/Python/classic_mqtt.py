@@ -310,8 +310,11 @@ def run(argv):
 
     try:
         log.info("Connecting to MQTT {}:{}".format(argumentValues['mqttHost'], argumentValues['mqttPort']))
+        mqttClient.tls_set(ca_certs="/broker-ca.pem", certfile=None, keyfile=None)
+        mqttClient.tls_insecure_set(True)
         mqttClient.connect(host=argumentValues['mqttHost'],port=int(argumentValues['mqttPort'])) 
     except Exception as e:
+        print(e)
         log.error("Unable to connect to MQTT, exiting...")
         sys.exit(2)
 
